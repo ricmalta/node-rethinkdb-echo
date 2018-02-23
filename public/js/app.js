@@ -48,8 +48,7 @@ function App (url) {
     xhttp.send(JSON.stringify(obj));
   }
 
-  var checkNickname = function(force) {
-
+  var checkNickname = function (force) {
     window.nickname = atob($.cookie('echoblaster-nickname') || '');
     if (nickname && !force) {
       return;
