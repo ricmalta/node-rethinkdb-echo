@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
 import Send from 'material-ui-icons/Send';
 import TextField from 'material-ui/TextField'
+import { white } from 'material-ui/styles/colors';
 
 const styles = theme => ({
   container: {
@@ -12,11 +13,15 @@ const styles = theme => ({
     right: 0,
     bottom: 0,
     display: 'flex',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
+    backgroundColor: '#f9f9f9'
   },
   textField: {
     flexGrow: 1,
-    margin: '0 0 8px 8px'
+    margin: '0 0 8px 8px',
+    backgroundColor: 'white',
+    paddingTop: '8px',
+    borderRadius: '4px 4px 4px 4px'
   },
   button: {
     margin: theme.spacing.unit,
@@ -54,11 +59,16 @@ class BottomBar extends Component {
           type="text"
           className={classes.textField} 
           value={value}
+          autoFocus={true}
+          placeholder="Type your message"
           onChange={(evt) => { 
             this.setState({ value: evt.target.value })
           }}
+          onKeyPress={(evt) => {
+            evt.key === 'Enter' && this.send()
+          }}
           >
-          </TextField>
+        </TextField>
         <Button 
         className={classes.button} 
         variant="raised" 
