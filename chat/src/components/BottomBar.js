@@ -20,7 +20,9 @@ const styles = theme => ({
     flexGrow: 1,
     margin: '0 0 8px 8px',
     backgroundColor: 'white',
-    paddingTop: '8px',
+    paddingLeft: '8px',
+    paddingRight: '8px',
+    paddingBottom: '8px',
     borderRadius: '4px 4px 4px 4px'
   },
   button: {

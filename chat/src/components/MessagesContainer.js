@@ -13,6 +13,7 @@ import List, {
 } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import { white } from 'material-ui/styles/colors';
+import io from 'socket.io-client';
 
 const styles = theme => ({
   container: {
@@ -32,38 +33,43 @@ class MessagesContainer extends Component {
     super(props);
     const { classes } = props;
     this.state = {
-      value: [],
+      value: [{ name: 'Ricardo', text: 'sandljknlsadsadna' }],
       classes
     };
+    this.socket = io.connect(process.env.SOCKET_URL);
+    this.socket.on('message', this.messageHandler);
   }
 
-  generate = (element) => {
-    return [0, 1, 2].map(value =>
-      React.cloneElement(element, {
-        key: value,
-      }),
-    );
+  // generate = (element) => {
+  //   return [0, 1, 2].map(value =>
+  //     React.cloneElement(element, {
+  //       key: value,
+  //     }),
+  //   );
+  // }
+
+  messageHandler = (msg) => {
+    const value = [msg].concat(this.state.value)
+    this.setState({value})
   }
-  
 
   render() {
     const { classes, value } = this.state;
     const dense = false;
     const secondary = true;
+    console.log(value)
     return (
       <div id='message-container' className={classes.container}>
         <Grid container>
           <Grid item xs={12} md={6}>
             <div className={classes.demo}>
               <List dense={dense}>
-                {this.generate(
-                  <ListItem>
+                {this.state.value.map((msg) => <ListItem>
                     <ListItemText
-                      primary="{Name}"
-                      secondary={secondary ? '{Message}' : null}
+                      primary={msg.name || 'Anonymous'}
+                      secondary={msg.text}
                     />
-                  </ListItem>,
-                )}
+                  </ListItem>)}
               </List>
             </div>
           </Grid>
