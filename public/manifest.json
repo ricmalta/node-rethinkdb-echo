@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "chatapp",
+  "name": "Chat app with RethinkDB",
   "icons": [
     {
       "src": "favicon.ico",

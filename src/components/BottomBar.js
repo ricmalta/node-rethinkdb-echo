@@ -11,7 +11,6 @@ import Dialog, {
   DialogContent,
   DialogTitle,
 } from 'material-ui/Dialog';
-import { white } from 'material-ui/styles/colors';
 import { xhr } from '../net';
 
 const styles = theme => ({
@@ -67,7 +66,7 @@ class BottomBar extends Component {
       return;
     }
 
-    const res = await xhr({ method: 'POST', data: obj })
+    await xhr({ method: 'POST', data: obj })
   }
 
   toggleConfig = (val) => {
@@ -91,7 +90,7 @@ class BottomBar extends Component {
   }
 
   render() {
-    const { classes, value, nickname, channel } = this.state;
+    const { classes, value } = this.state;
    
     return (
       <div className={classes.container}>

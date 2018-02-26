@@ -3,11 +3,10 @@ export async function xhr(opt) {
     uri = '/api/v1/messages/',
     method = 'GET',
     data,
-    query,
     headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-    },
+    }
   } = opt;
   const authorization = null;
   // set the authorization header

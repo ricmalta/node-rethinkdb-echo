@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import './App.css';
 import BottomBar from './components/BottomBar'
 import MessagesContainer from './components/MessagesContainer'
@@ -7,7 +6,6 @@ import MessagesContainer from './components/MessagesContainer'
 class App extends Component {
   constructor(props) {
     super(props);
-    const { classes } = props;
     this.state = {
       channel: 'public',
     };
