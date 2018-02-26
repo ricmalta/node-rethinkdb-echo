@@ -6,6 +6,7 @@ import List, {
   ListItem,
   ListItemText,
 } from 'material-ui/List';
+import TextField from 'material-ui/TextField'
 import { white } from 'material-ui/styles/colors';
 import io from 'socket.io-client';
 
@@ -67,6 +68,12 @@ class MessagesContainer extends Component {
                       primary={`${msg.Author}@${this.state.room}` || 'Anonymous'}
                       secondary={msg.Text}
                     />
+                  {/* <TextField
+                    type="text"
+                    multiline
+                    disabled
+                    // className={classes.textField} 
+                    value={msg.Text} /> */}
                   </ListItem>)}
               </List>
             </div>

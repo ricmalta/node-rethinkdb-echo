@@ -105,6 +105,7 @@ class BottomBar extends Component {
         </IconButton>
         <TextField
           type="text"
+          multiline
           className={classes.textField} 
           value={value}
           autoFocus={true}
