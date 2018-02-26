@@ -29,7 +29,7 @@ class MessagesContainer extends Component {
       value: [],
       classes
     };
-    this.socket = io.connect(process.env.SOCKET_URL || '//localhost:9700');
+    this.socket = io.connect(process.env.SOCKET_URL || '//');
     // this.socket.on('connect', this.enter)
     this.socket.on('messages', this.messageHandler);
   }

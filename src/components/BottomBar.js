@@ -60,13 +60,8 @@ class BottomBar extends Component {
   send = async () => {
     const message = this.state.value;
     const obj = { Author: this.state.nickname, Room: this.state.channel, Text: message };
-    if (this.props.onSend) {
-      this.props.onSend(this.state.value);
-      this.setState({ value: '' });
-      return;
-    }
-
     await xhr({ method: 'POST', data: obj })
+    this.setState({ value: '' });
   }
 
   toggleConfig = (val) => {
@@ -104,7 +99,7 @@ class BottomBar extends Component {
         </IconButton>
         <TextField
           type="text"
-          multiline
+          // multiline
           className={classes.textField} 
           value={value}
           autoFocus={true}

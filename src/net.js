@@ -25,7 +25,7 @@ export async function xhr(opt) {
   if (data) {
     options.body = JSON.stringify(data);
   }
-  let url = `${process.env.SOCKET_URL || '//localhost:9700'}${uri}`;
+  let url = `${process.env.SOCKET_URL || ''}${uri}`;
   // start request
   return fetch(url, options)
     .then(res => {
