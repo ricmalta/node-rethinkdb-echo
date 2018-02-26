@@ -7,9 +7,9 @@ import MessagesContainer from './components/MessagesContainer'
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <MessagesContainer />
-        <BottomBar />
+      <div key='container' className="App">
+        <MessagesContainer channel='public' />
+        <BottomBar/>
       </div>
     );
   }

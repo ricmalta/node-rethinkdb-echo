@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
-import Send from 'material-ui-icons/Send';
 import Grid from 'material-ui/Grid';
 import List, {
   ListItem,
-  ListItemAvatar,
-  ListItemIcon,
-  ListItemSecondaryAction,
   ListItemText,
 } from 'material-ui/List';
-import Typography from 'material-ui/Typography';
 import { white } from 'material-ui/styles/colors';
 import io from 'socket.io-client';
 
@@ -20,7 +14,7 @@ const styles = theme => ({
     position: 'fixed',
     left: 0,
     right: 0,
-    bottom: '56px',
+    bottom: '67px',
     top: 0,
     display: 'flex',
     alignItems: 'flex-end',
@@ -31,43 +25,35 @@ const styles = theme => ({
 class MessagesContainer extends Component {
   constructor(props) {
     super(props);
-    const { classes } = props;
+    const { classes, channel } = props;
     this.state = {
-      value: [{ name: 'Ricardo', text: 'sandljknlsadsadna' }],
+      value: [],
       classes
     };
-    this.socket = io.connect(process.env.SOCKET_URL);
-    this.socket.on('message', this.messageHandler);
+    this.socket = io.connect(process.env.SOCKET_URL || '//localhost:9700');
+    this.socket.on('messages', this.messageHandler);
+    this.socket.on('connect', ()=> { console.log('CONNECTED!') })
+    this.socket.on('disconnect', ()=> { console.log('DISCONNECT!') })
+    this.socket.on('event', function(data){ console.log('DATA', data) });
   }
 
-  // generate = (element) => {
-  //   return [0, 1, 2].map(value =>
-  //     React.cloneElement(element, {
-  //       key: value,
-  //     }),
-  //   );
-  // }
-
   messageHandler = (msg) => {
-    const value = [msg].concat(this.state.value)
+    const value = (this.state.value || []).concat(msg)
     this.setState({value})
   }
 
   render() {
     const { classes, value } = this.state;
-    const dense = false;
-    const secondary = true;
-    console.log(value)
     return (
       <div id='message-container' className={classes.container}>
         <Grid container>
           <Grid item xs={12} md={6}>
             <div className={classes.demo}>
-              <List dense={dense}>
-                {this.state.value.map((msg) => <ListItem>
+              <List dense={true}>
+                {this.state.value.map((msg, i) => <ListItem key={`message.${i}`}>
                     <ListItemText
-                      primary={msg.name || 'Anonymous'}
-                      secondary={msg.text}
+                      primary={msg.Author || 'Anonymous'}
+                      secondary={msg.Text}
                     />
                   </ListItem>)}
               </List>
