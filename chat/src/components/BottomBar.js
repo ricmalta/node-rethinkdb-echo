@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton'
 import Send from 'material-ui-icons/Send';
 import Edit from 'material-ui-icons/Edit';
 import TextField from 'material-ui/TextField'
 import Dialog, {
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
 import { white } from 'material-ui/styles/colors';
@@ -71,17 +71,21 @@ class BottomBar extends Component {
   }
 
   toggleConfig = (val) => {
-    console.log(val)
+    if (!this.state.nickname || !this.state.channel) {
+      return;
+    }
     this.setState({ open: !this.state.open })
+    if (this.props.onChangeChannel && this.state.channel) {
+      this.props.onChangeChannel(this.state.channel);
+    }
   }
 
   onChange = (evt) => {
-    console.log('onChange', { [evt.target.name]: evt.target.value })
     this.setState({ [evt.target.name]: evt.target.value });
   }
 
   componentWillMount = () => {
-    if (!this.state.nickname) {
+    if (!this.state.nickname || ! this.state.channel) {
       this.setState({ open:true })
     }
   }
@@ -91,13 +95,14 @@ class BottomBar extends Component {
    
     return (
       <div className={classes.container}>
-        <Button 
+        <IconButton 
           className={classes.button} 
           variant="fab" 
           color="default"
+          size="medium"
           onClick={this.toggleConfig}>
           <Edit />
-        </Button>
+        </IconButton>
         <TextField
           type="text"
           className={classes.textField} 
@@ -112,13 +117,14 @@ class BottomBar extends Component {
           }}
           >
         </TextField>
-        <Button 
-        className={classes.button} 
-        variant="raised" 
-        color="default"
-        onClick={this.send}>Send
-          <Send className={classes.rightIcon}>send</Send>
-        </Button>
+        <IconButton 
+          className={classes.button} 
+          variant="fab"
+          size="medium"
+          color="default"
+          onClick={this.send}>
+          <Send />
+        </IconButton>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -128,6 +134,8 @@ class BottomBar extends Component {
           <DialogContent>
           <TextField
               autoFocus
+              required
+              error={!this.state.nickname}
               margin="dense"
               id="nickname"
               name="nickname"
@@ -137,8 +145,9 @@ class BottomBar extends Component {
               value={this.state.nickname}
               onChange={this.onChange}
             />
-           
             <TextField
+              required
+              error={!this.state.channel}
               margin="dense"
               id="channel"
               name="channel"

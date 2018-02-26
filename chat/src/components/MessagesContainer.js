@@ -14,7 +14,7 @@ const styles = theme => ({
     position: 'fixed',
     left: 0,
     right: 0,
-    bottom: '67px',
+    bottom: '63px',
     top: 0,
     display: 'flex',
     alignItems: 'flex-end',
@@ -25,25 +25,37 @@ const styles = theme => ({
 class MessagesContainer extends Component {
   constructor(props) {
     super(props);
-    const { classes, channel } = props;
+    const { classes } = props;
     this.state = {
       value: [],
       classes
     };
     this.socket = io.connect(process.env.SOCKET_URL || '//localhost:9700');
+    // this.socket.on('connect', this.enter)
     this.socket.on('messages', this.messageHandler);
-    this.socket.on('connect', ()=> { console.log('CONNECTED!') })
-    this.socket.on('disconnect', ()=> { console.log('DISCONNECT!') })
-    this.socket.on('event', function(data){ console.log('DATA', data) });
   }
 
+  enter = (room = '') => {
+    this.setState({ value: [] })
+    if (room) {
+      this.setState({room})
+      this.socket.emit('enter', room);
+    }
+  }
+
+  componentWillReceiveProps = (props) => {
+    if (props && props.Channel) {
+      this.enter(props.Channel);
+    }
+  } 
+
   messageHandler = (msg) => {
-    const value = (this.state.value || []).concat(msg)
-    this.setState({value})
+    const value = (this.state.value || []).concat(msg);
+    this.setState({value});
   }
 
   render() {
-    const { classes, value } = this.state;
+    const { classes } = this.state;
     return (
       <div id='message-container' className={classes.container}>
         <Grid container>
@@ -52,7 +64,7 @@ class MessagesContainer extends Component {
               <List dense={true}>
                 {this.state.value.map((msg, i) => <ListItem key={`message.${i}`}>
                     <ListItemText
-                      primary={msg.Author || 'Anonymous'}
+                      primary={`${msg.Author}@${this.state.room}` || 'Anonymous'}
                       secondary={msg.Text}
                     />
                   </ListItem>)}
