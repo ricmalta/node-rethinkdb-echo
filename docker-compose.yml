@@ -1,0 +1,19 @@
+version: '2'
+services:
+  rethinkdb:
+    image: rethinkdb:2.3.6
+    ports:
+     - "28015:28015"
+    volumes:
+     - /data:/data
+    command: rethinkdb --bind all --data /data 
+  app:
+    build: .
+    command: node start
+    depends_on:
+      - rethinkdb
+    environment:
+      - NODE_ENV=production
+      - CIDADES_DB_HOSTNAME=rethinkdb
+    ports:
+     - 9700:80
