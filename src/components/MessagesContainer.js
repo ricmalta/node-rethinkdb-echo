@@ -17,7 +17,9 @@ const styles = theme => ({
     top: 0,
     display: 'flex',
     alignItems: 'flex-end',
-    backgroundColor: '#eeeeee'
+    backgroundColor: '#eeeeee',
+    maxHeight: '100%', 
+    overflow: 'auto'
   }
 });
 
@@ -65,13 +67,14 @@ class MessagesContainer extends Component {
         <Grid container>
           <Grid item xs={12} md={6}>
             <div className={classes.demo}>
-              <List dense={true} style={{maxHeight: '100%', overflow: 'auto'}}>
-                {this.state.value.map((msg, i) => <ListItem key={`message.${i}`}>
+              <List component='div'>
+                {this.state.value.map((msg, i) => 
+                <ListItem key={`message.${i}`}>
                     <ListItemText
                       primary={`${msg.Author}@${this.state.room}` || 'Anonymous'}
                       secondary={msg.Text}
                     />
-                  </ListItem>)}
+                </ListItem>)}
               </List>
             </div>
           </Grid>

@@ -140,6 +140,9 @@ class BottomBar extends Component {
               fullWidth
               value={this.state.nickname}
               onChange={this.onChange}
+              onKeyPress={(evt) => {
+                evt.key === 'Enter' && this.toggleConfig()
+              }}
             />
             <TextField
               required
@@ -152,6 +155,9 @@ class BottomBar extends Component {
               fullWidth
               value={this.state.channel}
               onChange={this.onChange}
+              onKeyPress={(evt) => {
+                evt.key === 'Enter' && this.toggleConfig()
+              }}
             />
           </DialogContent>
           <DialogActions>
