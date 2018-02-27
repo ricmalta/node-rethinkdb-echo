@@ -59,6 +59,7 @@ class BottomBar extends Component {
   
   send = async () => {
     const message = this.state.value;
+    if (!message) { return; }
     const obj = { Author: this.state.nickname, Room: this.state.channel, Text: message };
     await xhr({ method: 'POST', data: obj })
     this.setState({ value: '' });

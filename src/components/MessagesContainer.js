@@ -29,7 +29,7 @@ class MessagesContainer extends Component {
       value: [],
       classes
     };
-    this.socket = io.connect(process.env.SOCKET_URL || '//');
+    this.socket = io.connect(process.env.NODE_ENV === 'development' ? '//localhost:9700' : '//');
     // this.socket.on('connect', this.enter)
     this.socket.on('messages', this.messageHandler);
   }
@@ -49,7 +49,12 @@ class MessagesContainer extends Component {
   } 
 
   messageHandler = (msg) => {
-    const value = (this.state.value || []).concat(msg);
+    const curr = Array.isArray(msg) ? msg.sort((a, b) => {
+      const da = new Date(a.CreateDate);
+      const db = new Date(b.CreateDate);
+      return da - db;
+    }) : msg;
+    const value = (this.state.value || []).concat(curr);
     this.setState({value});
   }
 
@@ -60,7 +65,7 @@ class MessagesContainer extends Component {
         <Grid container>
           <Grid item xs={12} md={6}>
             <div className={classes.demo}>
-              <List dense={true}>
+              <List dense={true} style={{maxHeight: '100%', overflow: 'auto'}}>
                 {this.state.value.map((msg, i) => <ListItem key={`message.${i}`}>
                     <ListItemText
                       primary={`${msg.Author}@${this.state.room}` || 'Anonymous'}

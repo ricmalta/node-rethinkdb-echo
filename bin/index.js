@@ -23,7 +23,7 @@ socket(server, (err, res) => {
     log.info('Socket.io initialized successefully!');
   }
 });
-
+log.info(`Running on ${process.env.NODE_ENV} environment.`);
 // Listen on provided port, on all network interfaces.
 server.listen(port, '0.0.0.0');
 server.on('error', onError);
