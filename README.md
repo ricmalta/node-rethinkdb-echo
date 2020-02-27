@@ -27,18 +27,17 @@ The web sockets are managed by socket.io (http://socket.io/).
 
 The rest of the realtime magic is RethinkDB. To connect and interact with RethinkDB its used the Thinky ORM (https://thinky.io/).
 
-
 ## Installation and configuration
 
 - Install dependencies:
 
-  - RethinkDB 2.3.5: https://www.rethinkdb.com/docs/install/
-  - Node.js 6.9.x: https://nodejs.org/en/download/
+  - RethinkDB 2.4.0: https://www.rethinkdb.com/docs/install/
+  - Node.js 12.16.x: https://nodejs.org/en/download/
 
 - Clone repository and run:
 ```bash
-  $ npm install
-  $ node index.js
+  $ npm run build
+  $ npm start
 ```
 
 The HTTP interface is running by default in the TCP port 9700
