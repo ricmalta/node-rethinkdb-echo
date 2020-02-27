@@ -36,6 +36,7 @@ The rest of the realtime magic is RethinkDB. To connect and interact with Rethin
 
 - Clone repository and run:
 ```bash
+  $ npm install
   $ npm run build
   $ npm start
 ```
